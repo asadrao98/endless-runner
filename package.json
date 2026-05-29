@@ -1,0 +1,18 @@
+{
+  "name": "endless-runner",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A minimal Three.js endless runner.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "dependencies": {
+    "three": "^0.160.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}
