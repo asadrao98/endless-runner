@@ -22,22 +22,26 @@ npm run preview
 
 ## Deploy to Firebase Hosting
 
-The project is wired up for the Firebase project `endless-runn`. First-time
-setup on a machine:
+The project is wired up for the Firebase project `endless-runn`, hosting
+on a site named `runvora` (URL: `https://runvora.web.app`).
+
+First-time setup on a machine:
 
 ```bash
 npx firebase login
+npx firebase hosting:sites:create runvora   # only needed once, ever
 ```
 
-Then build and deploy in one step:
+Then build and deploy:
 
 ```bash
 npm run deploy
 ```
 
-That runs `vite build` and uploads `dist/` to Firebase Hosting. To change
-the target project, edit `.firebaserc`. Hosting config lives in
-`firebase.json` — long cache for hashed assets, no cache for `index.html`.
+That runs `vite build` and uploads `dist/` to the `runvora` site. To change
+the project, edit `.firebaserc`; to change the site, edit the `site` field
+in `firebase.json`. Cache rules: long cache for hashed assets, no cache for
+`index.html`.
 
 ## Controls
 
