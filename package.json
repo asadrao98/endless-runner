@@ -1,9 +1,9 @@
 {
-  "name": "endless-runner",
+  "name": "runvora",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "A minimal Three.js endless runner.",
+  "description": "Runvora — a minimal Three.js endless runner.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

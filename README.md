@@ -1,4 +1,4 @@
-# Endless Runner
+# Runvora
 
 A minimal, modern Three.js endless runner. Three lanes, jump, collect coins,
 dodge obstacles, ramp up speed forever. No assets required — everything is

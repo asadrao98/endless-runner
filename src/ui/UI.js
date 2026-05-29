@@ -19,7 +19,7 @@ export class UI {
     this.menu.className = 'screen hidden';
     this.menu.innerHTML = `
       <div class="panel">
-        <div class="title">Endless Runner</div>
+        <div class="title">Runvora</div>
         <div class="subtitle">Dodge. Collect. Survive.</div>
         <div class="controls">
           <span class="key">← / A</span><span>Move left</span>
