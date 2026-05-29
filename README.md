@@ -20,6 +20,25 @@ npm run build
 npm run preview
 ```
 
+## Deploy to Firebase Hosting
+
+The project is wired up for the Firebase project `endless-runn`. First-time
+setup on a machine:
+
+```bash
+npx firebase login
+```
+
+Then build and deploy in one step:
+
+```bash
+npm run deploy
+```
+
+That runs `vite build` and uploads `dist/` to Firebase Hosting. To change
+the target project, edit `.firebaserc`. Hosting config lives in
+`firebase.json` — long cache for hashed assets, no cache for `index.html`.
+
 ## Controls
 
 | Key            | Action     |
