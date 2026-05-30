@@ -22,9 +22,12 @@ export class Player {
     this.isJumping = false;
     this.runTime = 0;
 
+    // Collision box is intentionally narrower than the visible mesh so
+    // near-misses in adjacent lanes feel fair. Width/depth fit inside one
+    // lane with margin; height covers torso + legs (head pokes above).
     this._box = new THREE.Box3();
     this._boxCenter = new THREE.Vector3();
-    this._boxSize = new THREE.Vector3(0.7, 1.8, 0.7);
+    this._boxSize = new THREE.Vector3(0.5, 1.5, 0.5);
 
     this._bindInput();
   }
@@ -194,7 +197,7 @@ export class Player {
   getBoundingBox() {
     this._boxCenter.set(
       this.group.position.x,
-      this.group.position.y + 0.9,
+      this.group.position.y + 0.75,
       this.group.position.z,
     );
     this._box.setFromCenterAndSize(this._boxCenter, this._boxSize);

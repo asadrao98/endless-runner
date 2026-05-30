@@ -154,7 +154,15 @@ export class ObstacleManager {
   }
 
   checkCollision(playerBox) {
+    // The player's current lateral position (centre of their box). Used
+    // as a lane gate so wide obstacles in adjacent lanes can't phantom-hit
+    // the player when the box edges graze across a lane boundary.
+    const playerX = (playerBox.min.x + playerBox.max.x) * 0.5;
+    const laneHalf = GAME_CONFIG.laneWidth * 0.5;
+
     for (const o of this.active) {
+      if (Math.abs(o.mesh.position.x - playerX) > laneHalf) continue;
+
       this._tmpCenter.set(
         o.mesh.position.x,
         o.centerY,
