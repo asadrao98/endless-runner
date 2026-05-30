@@ -238,7 +238,7 @@ export class Game {
       this.score += collected * 10;
     }
 
-    if (this.obstacleManager.checkCollision(playerBox)) {
+    if (this.obstacleManager.checkCollision(playerBox, this.player.lane)) {
       this._gameOver();
       return;
     }

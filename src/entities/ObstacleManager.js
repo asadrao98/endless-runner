@@ -135,6 +135,7 @@ export class ObstacleManager {
       const lane = laneIndices[i];
       const typeIndex = Math.floor(Math.random() * OBSTACLE_TYPES.length);
       const o = this._acquire(typeIndex);
+      o.laneIndex = lane;
       o.mesh.position.x = GAME_CONFIG.lanes[lane];
       o.mesh.position.z = z;
       this.active.push(o);
@@ -153,15 +154,13 @@ export class ObstacleManager {
     }
   }
 
-  checkCollision(playerBox) {
-    // The player's current lateral position (centre of their box). Used
-    // as a lane gate so wide obstacles in adjacent lanes can't phantom-hit
-    // the player when the box edges graze across a lane boundary.
-    const playerX = (playerBox.min.x + playerBox.max.x) * 0.5;
-    const laneHalf = GAME_CONFIG.laneWidth * 0.5;
-
+  checkCollision(playerBox, playerLane) {
+    // Lane-based gate: the player only collides with obstacles in their
+    // *logical* lane (the integer set on keypress), not their visual X.
+    // This prevents phantom hits while the lane-change lerp is mid-flight
+    // and the avatar's bounding box is grazing an adjacent lane.
     for (const o of this.active) {
-      if (Math.abs(o.mesh.position.x - playerX) > laneHalf) continue;
+      if (o.laneIndex !== playerLane) continue;
 
       this._tmpCenter.set(
         o.mesh.position.x,
