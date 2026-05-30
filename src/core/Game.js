@@ -28,7 +28,7 @@ export class Game {
 
     // Sub-systems. Each one owns its own meshes and pooling.
     this.environment = new Environment(this.scene);
-    this.player = new Player(this.scene);
+    this.player = new Player(this.scene, this.canvas);
     this.obstacleManager = new ObstacleManager(this.scene);
     this.coinManager = new CoinManager(this.scene);
 

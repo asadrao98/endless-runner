@@ -26,6 +26,7 @@ export class UI {
           <span class="key">→ / D</span><span>Move right</span>
           <span class="key">Space</span><span>Jump</span>
         </div>
+        <div class="subtitle touch-hint">On mobile: swipe to move, tap or swipe up to jump.</div>
         <div class="subtitle">Best: <span class="best">0</span></div>
         <button class="btn start-btn" type="button">Play</button>
       </div>

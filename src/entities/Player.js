@@ -7,8 +7,9 @@ import { GAME_CONFIG } from '../core/config.js';
  * recomputed bounding box for collision checks.
  */
 export class Player {
-  constructor(scene) {
+  constructor(scene, canvas) {
     this.scene = scene;
+    this.canvas = canvas;
     this.group = new THREE.Group();
     this.position = this.group.position;
 
@@ -30,6 +31,7 @@ export class Player {
     this._boxSize = new THREE.Vector3(0.5, 1.5, 0.5);
 
     this._bindInput();
+    this._bindTouch();
   }
 
   // -- construction ----------------------------------------------------------
@@ -113,6 +115,77 @@ export class Player {
       }
     };
     window.addEventListener('keydown', this._onKey);
+  }
+
+  // Touch controls: swipe left/right to change lanes, swipe up or tap to
+  // jump. Bound to the canvas so taps on menu / game-over panels don't
+  // leak into gameplay actions.
+  _bindTouch() {
+    if (!this.canvas) return;
+
+    const SWIPE_PX = 28;
+    const TAP_PX = 16;
+    const TAP_MS = 220;
+
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let activeId = null;
+
+    this.canvas.addEventListener(
+      'touchstart',
+      (e) => {
+        if (activeId !== null) return;
+        const t = e.changedTouches[0];
+        activeId = t.identifier;
+        startX = t.clientX;
+        startY = t.clientY;
+        startTime = performance.now();
+      },
+      { passive: true },
+    );
+
+    const onEnd = (e) => {
+      let touch = null;
+      for (const t of e.changedTouches) {
+        if (t.identifier === activeId) {
+          touch = t;
+          break;
+        }
+      }
+      if (!touch) return;
+      activeId = null;
+
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      const dt = performance.now() - startTime;
+      const adx = Math.abs(dx);
+      const ady = Math.abs(dy);
+
+      // Quick stationary touch → jump.
+      if (dt < TAP_MS && adx < TAP_PX && ady < TAP_PX) {
+        this.jump();
+        return;
+      }
+      // Otherwise pick the dominant swipe axis.
+      if (adx > ady) {
+        if (adx > SWIPE_PX) {
+          if (dx < 0) this.moveLeft();
+          else this.moveRight();
+        }
+      } else if (dy < -SWIPE_PX) {
+        this.jump();
+      }
+    };
+
+    this.canvas.addEventListener('touchend', onEnd, { passive: true });
+    this.canvas.addEventListener(
+      'touchcancel',
+      () => {
+        activeId = null;
+      },
+      { passive: true },
+    );
   }
 
   moveLeft() {
