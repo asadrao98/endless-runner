@@ -45,6 +45,7 @@ export class CoinManager {
     }
     const mesh = new THREE.Mesh(this._coinGeom, this._coinMat);
     mesh.castShadow = true;
+    this.scene.add(mesh);
     return { mesh };
   }
 

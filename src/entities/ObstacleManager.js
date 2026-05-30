@@ -102,6 +102,7 @@ export class ObstacleManager {
       return o;
     }
     const built = OBSTACLE_TYPES[typeIndex].build();
+    this.scene.add(built.mesh);
     return {
       typeIndex,
       mesh: built.mesh,
